@@ -5,7 +5,7 @@ header('Content-Type: application/json; charset=utf-8');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 	http_response_code(405);
-	echo json_encode(['error' => 'Please submit a question with the portfolio advisor form.']);
+	echo json_encode(['error' => 'Please send a chat message from the portfolio assistant.']);
 	exit;
 }
 
@@ -14,22 +14,67 @@ $payload = json_decode($rawInput ?: '', true);
 
 if (!is_array($payload)) {
 	http_response_code(400);
-	echo json_encode(['error' => 'The advisor could not read that request. Please try again.']);
+	echo json_encode(['error' => 'The assistant could not read that request. Please try again.']);
 	exit;
 }
 
-$question = trim((string) ($payload['question'] ?? ''));
-$question = preg_replace('/\s+/', ' ', $question) ?? '';
+$incomingMessages = $payload['messages'] ?? null;
 
-if ($question === '') {
+if (!is_array($incomingMessages)) {
+	http_response_code(422);
+	echo json_encode(['error' => 'Please send the chat history as a messages array.']);
+	exit;
+}
+
+if (count($incomingMessages) < 2) {
+	http_response_code(422);
+	echo json_encode(['error' => 'Please include at least one message for the assistant.']);
+	exit;
+}
+
+if (count($incomingMessages) > 21) {
+	$incomingMessages = array_merge(
+		array_slice($incomingMessages, 0, 1),
+		array_slice($incomingMessages, -20)
+	);
+}
+
+$messages = [];
+
+foreach ($incomingMessages as $message) {
+	if (!is_array($message)) {
+		continue;
+	}
+
+	$role = (string) ($message['role'] ?? '');
+	$content = trim((string) ($message['content'] ?? ''));
+	$content = preg_replace('/\s+/', ' ', $content) ?? '';
+
+	if (!in_array($role, ['system', 'user', 'assistant'], true) || $content === '') {
+		continue;
+	}
+
+	if (strlen($content) > 2000) {
+		$content = substr($content, 0, 2000);
+	}
+
+	$messages[] = [
+		'role' => $role,
+		'content' => $content,
+	];
+}
+
+$hasUserMessage = false;
+foreach ($messages as $message) {
+	if ($message['role'] === 'user') {
+		$hasUserMessage = true;
+		break;
+	}
+}
+
+if (!$hasUserMessage) {
 	http_response_code(422);
 	echo json_encode(['error' => 'Please ask a question about Sai Kiran\'s skills, projects, or background.']);
-	exit;
-}
-
-if (strlen($question) > 600) {
-	http_response_code(422);
-	echo json_encode(['error' => 'Please keep the question under 600 characters.']);
 	exit;
 }
 
@@ -67,13 +112,15 @@ Style rules:
 PROMPT;
 
 $requestBody = [
-	'model' => getenv('OPENAI_MODEL') ?: 'gpt-4o-mini',
-	'messages' => [
-		['role' => 'system', 'content' => $systemPrompt],
-		['role' => 'user', 'content' => $question],
-	],
+	'model' => 'gpt-4o-mini',
+	'messages' => array_merge(
+		[['role' => 'system', 'content' => $systemPrompt]],
+		array_values(array_filter($messages, static function (array $message): bool {
+			return $message['role'] !== 'system';
+		}))
+	),
 	'temperature' => 0.35,
-	'max_tokens' => 220,
+	'max_tokens' => 260,
 ];
 
 $ch = curl_init('https://api.openai.com/v1/chat/completions');

@@ -13,7 +13,7 @@ Production portfolio site for the CS Web Server Platforms final practical. The s
 
 ## AI Feature
 
-The AI Portfolio Advisor lets a visitor ask focused questions about Sai Kiran's skills, projects, education, certifications, and role fit. Browser JavaScript sends the visitor's question to a same-origin endpoint:
+The AI Portfolio Advisor is a chat-style assistant that lets a visitor ask follow-up questions about Sai Kiran's skills, projects, education, certifications, and role fit. Browser JavaScript keeps the chat history in memory and `localStorage`, then sends the conversation to a same-origin endpoint:
 
 ```text
 POST /api/portfolio-advisor
@@ -25,7 +25,18 @@ Nginx should route that public path to:
 /api/portfolio-advisor.php
 ```
 
-The PHP script validates the request, loads `OPENAI_API_KEY` from the server environment, and calls OpenAI with a custom system prompt grounded in the portfolio content. If the API key is missing, the request is invalid, or OpenAI is unavailable, the visitor receives a clear JSON error message instead of a PHP warning or blank page.
+The request body uses OpenAI-style messages:
+
+```json
+{
+  "messages": [
+    { "role": "system", "content": "You are Sai Kiran's portfolio assistant..." },
+    { "role": "user", "content": "Which project shows web operations experience?" }
+  ]
+}
+```
+
+The PHP script validates the message history, replaces the browser-provided system prompt with the server-owned portfolio prompt, loads `OPENAI_API_KEY` from the server environment, and calls OpenAI with `gpt-4o-mini`. If the API key is missing, the request is invalid, or OpenAI is unavailable, the visitor receives a clear JSON error message instead of a PHP warning or blank page.
 
 ## Environment
 
