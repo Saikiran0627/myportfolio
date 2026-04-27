@@ -254,7 +254,7 @@
 		showTypingIndicator();
 
 		try {
-			const response = await fetch('/api/portfolio-advisor', {
+			const response = await fetch('/api/portfolio-advisor.php', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ messages })
