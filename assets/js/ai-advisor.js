@@ -266,12 +266,14 @@
 			try {
 				data = rawResponse ? JSON.parse(rawResponse) : {};
 			} catch (parseError) {
-				data = { error: 'Sai Kiran AI Assistant received an invalid server response. Please check the API endpoint configuration.' };
+				data = {
+					error: 'Sai Kiran AI Assistant received an invalid server response. Please check the API endpoint configuration.'
+				};
 			}
 
 			console.log('API RESPONSE:', data);
 
-			const reply = data.answer || data.error || 'Something went wrong.';
+			const reply = getAssistantReply(data, response.status);
 
 			hideTypingIndicator();
 			addMessage('assistant', reply);
@@ -289,6 +291,25 @@
 			setLoading(false);
 			input.focus();
 		}
+	}
+
+	function getAssistantReply(data, statusCode) {
+		if (typeof data === 'string' && data.trim() !== '')
+			return data;
+
+		if (data && typeof data.answer === 'string' && data.answer.trim() !== '')
+			return data.answer;
+
+		if (data && typeof data.error === 'string' && data.error.trim() !== '')
+			return data.error;
+
+		if (data && data.error && typeof data.error.message === 'string' && data.error.message.trim() !== '')
+			return data.error.message;
+
+		if (data && typeof data.message === 'string' && data.message.trim() !== '')
+			return data.message;
+
+		return 'Sai Kiran AI Assistant could not complete the request. Server returned HTTP ' + statusCode + '.';
 	}
 
 	function clearChat() {

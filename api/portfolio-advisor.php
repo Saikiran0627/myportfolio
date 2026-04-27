@@ -155,11 +155,12 @@ if ($responseBody === false || $curlError !== '') {
 }
 
 $response = json_decode($responseBody, true);
+$providerError = trim((string) ($response['error']['message'] ?? ''));
 $answer = trim((string) ($response['choices'][0]['message']['content'] ?? ''));
 
 if ($httpCode < 200 || $httpCode >= 300 || $answer === '') {
 	http_response_code(502);
-	echo json_encode(['error' => 'Sai Kiran AI Assistant received an incomplete response. Please try a different question.']);
+	echo json_encode(['error' => $providerError ?: 'Sai Kiran AI Assistant received an incomplete response. Please try a different question.']);
 	exit;
 }
 
