@@ -13,7 +13,7 @@ Production portfolio site for the CS Web Server Platforms final practical. The s
 
 ## AI Feature
 
-The AI Portfolio Advisor is a chat-style assistant that lets a visitor ask follow-up questions about Sai Kiran's skills, projects, education, certifications, and role fit. Browser JavaScript keeps the chat history in memory and `localStorage`, then sends the conversation to a same-origin endpoint:
+The AI Portfolio Advisor is a floating chat widget that opens from the bottom-right corner of the portfolio, similar to Intercom or Drift. Visitors can ask follow-up questions about Sai Kiran's skills, projects, education, certifications, and role fit. Browser JavaScript keeps the chat history in memory and `localStorage`, then sends the conversation to a same-origin endpoint:
 
 ```text
 POST /api/portfolio-advisor

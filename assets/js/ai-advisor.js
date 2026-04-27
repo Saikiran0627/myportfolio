@@ -6,8 +6,15 @@
 		'You are Sai Kiran Sikilammetla\'s portfolio assistant for recruiters and visitors.',
 		'Answer only from the portfolio facts provided by the server. Keep replies concise, specific, and recruiter-friendly.'
 	].join(' ');
+	var WIDGET_STATE_KEY = 'saiPortfolioAdvisorWidgetOpen';
 	var WELCOME_MESSAGE = 'Hi! I am Sai Kiran\'s AI Portfolio Advisor. Ask me about his skills, projects, education, or fit for a technical role.';
 
+	var widget = document.getElementById('ai-chat-widget');
+	var launcher = document.getElementById('ai-chat-launcher');
+	var launcherText = launcher ? launcher.querySelector('.ai-chat-launcher-text') : null;
+	var inlineOpenButton = document.getElementById('ai-widget-open-inline');
+	var closeButton = document.getElementById('ai-chat-close');
+	var panel = document.getElementById('ai-chat-panel');
 	var chatWindow = document.getElementById('ai-chat-window');
 	var form = document.getElementById('ai-chat-form');
 	var input = document.getElementById('ai-chat-input');
@@ -15,11 +22,12 @@
 	var clearButton = document.getElementById('ai-chat-clear');
 	var status = document.getElementById('ai-chat-status');
 
-	if (!chatWindow || !form || !input || !sendButton || !clearButton || !status)
+	if (!widget || !launcher || !launcherText || !closeButton || !panel || !chatWindow || !form || !input || !sendButton || !clearButton || !status)
 		return;
 
 	var messages = loadMessages();
 	var isWaiting = false;
+	var isOpen = false;
 
 	function createInitialMessages() {
 		return [
@@ -81,6 +89,30 @@
 		chatWindow.scrollTop = chatWindow.scrollHeight;
 	}
 
+	function setWidgetOpen(open) {
+		isOpen = open;
+		widget.classList.toggle('is-open', open);
+		launcher.classList.toggle('is-open', open);
+		launcher.setAttribute('aria-expanded', open ? 'true' : 'false');
+		panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+		launcherText.textContent = open ? 'Close' : 'Ask AI';
+
+		try {
+			localStorage.setItem(WIDGET_STATE_KEY, open ? 'open' : 'closed');
+		} catch (error) {
+			// The widget still works if the browser blocks localStorage.
+		}
+
+		if (open) {
+			window.setTimeout(function() {
+				scrollToLatest();
+				input.focus();
+			}, 180);
+		} else {
+			launcher.focus();
+		}
+	}
+
 	function formatTime(timestamp) {
 		var date = timestamp ? new Date(timestamp) : new Date();
 
@@ -138,7 +170,16 @@
 		saveMessages();
 		appendMessageBubble(message);
 		scrollToLatest();
+		updateLauncherBadge();
 		return message;
+	}
+
+	function updateLauncherBadge() {
+		var hasUserMessage = messages.some(function(message) {
+			return message.role === 'user';
+		});
+
+		launcher.classList.toggle('has-history', hasUserMessage);
 	}
 
 	function showTypingIndicator() {
@@ -271,6 +312,7 @@
 		messages = createInitialMessages();
 		saveMessages();
 		renderMessages();
+		updateLauncherBadge();
 		setStatus('Chat cleared.');
 		input.focus();
 	}
@@ -280,6 +322,17 @@
 		input.style.height = Math.min(input.scrollHeight, 130) + 'px';
 	}
 
+	launcher.addEventListener('click', function() {
+		setWidgetOpen(!isOpen);
+	});
+	if (inlineOpenButton) {
+		inlineOpenButton.addEventListener('click', function() {
+			setWidgetOpen(true);
+		});
+	}
+	closeButton.addEventListener('click', function() {
+		setWidgetOpen(false);
+	});
 	form.addEventListener('submit', handleSubmit);
 	clearButton.addEventListener('click', clearChat);
 	input.addEventListener('input', resizeInput);
@@ -289,6 +342,12 @@
 			form.dispatchEvent(new Event('submit', { cancelable: true }));
 		}
 	});
+	document.addEventListener('keydown', function(event) {
+		if (event.key === 'Escape' && isOpen)
+			setWidgetOpen(false);
+	});
 
 	renderMessages();
+	updateLauncherBadge();
+	setWidgetOpen(localStorage.getItem(WIDGET_STATE_KEY) === 'open');
 })();

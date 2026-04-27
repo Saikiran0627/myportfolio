@@ -140,27 +140,12 @@
 
 						<section id="ai-advisor" class="wrapper alt spotlight style3">
 								<div class="inner">
-									<div class="content">
+									<div class="content ai-widget-intro">
 										<h2 class="major">AI Portfolio Advisor</h2>
-										<p>Chat with a portfolio assistant about my skills, projects, and fit for technical roles. The conversation is sent to a server-side PHP endpoint, so the OpenAI API key never appears in the browser.</p>
-										<div class="ai-chat" aria-label="AI Portfolio Advisor chat">
-											<div class="ai-chat-header">
-												<div>
-													<span class="ai-chat-title">Sai Kiran's Portfolio Assistant</span>
-													<span class="ai-chat-subtitle">Ask about projects, skills, education, or role fit.</span>
-												</div>
-												<button type="button" id="ai-chat-clear" class="button small ai-chat-clear">Clear Chat</button>
-											</div>
-											<div id="ai-chat-window" class="ai-chat-messages" aria-live="polite"></div>
-											<div id="ai-chat-status" class="ai-chat-status" role="status" aria-live="polite"></div>
-											<form id="ai-chat-form" class="ai-chat-form">
-												<label for="ai-chat-input">Message the portfolio assistant</label>
-												<div class="ai-chat-input-row">
-													<textarea id="ai-chat-input" name="message" rows="1" maxlength="600" placeholder="Ask which project best shows web operations experience..." required></textarea>
-													<button type="submit" id="ai-chat-send" class="primary">Send</button>
-												</div>
-											</form>
-										</div>
+										<p>Chat with a portfolio assistant about my skills, projects, and fit for technical roles. The floating assistant in the bottom-right corner calls a server-side PHP endpoint, so the OpenAI API key never appears in the browser.</p>
+										<ul class="actions">
+											<li><button type="button" id="ai-widget-open-inline" class="button primary">Open AI Assistant</button></li>
+										</ul>
 									</div>
 								</div>
 							</section>
@@ -182,6 +167,42 @@
 						</div>
 					</section>
 
+			</div>
+
+			<div id="ai-chat-widget" class="ai-chat-widget" aria-live="polite">
+				<section id="ai-chat-panel" class="ai-chat-panel" aria-label="AI Portfolio Advisor chat" aria-hidden="true">
+					<div class="ai-chat-header">
+						<div class="ai-chat-heading">
+							<div class="ai-chat-avatar" aria-hidden="true">AI</div>
+							<div>
+								<span class="ai-chat-title">Sai Kiran's Portfolio Assistant</span>
+								<span class="ai-chat-subtitle">Usually replies in a few seconds</span>
+							</div>
+						</div>
+						<button type="button" id="ai-chat-clear" class="ai-chat-icon-button" title="Clear chat" aria-label="Clear chat">
+							<span class="icon solid fa-redo" aria-hidden="true"></span>
+						</button>
+						<button type="button" id="ai-chat-close" class="ai-chat-icon-button" title="Close chat" aria-label="Close chat">
+							<span class="icon solid fa-times" aria-hidden="true"></span>
+						</button>
+						<div id="ai-chat-status" class="ai-chat-status" role="status" aria-live="polite"></div>
+					</div>
+					<div id="ai-chat-window" class="ai-chat-messages" aria-live="polite"></div>
+					<form id="ai-chat-form" class="ai-chat-form">
+						<label for="ai-chat-input">Message the portfolio assistant</label>
+						<div class="ai-chat-input-row">
+							<textarea id="ai-chat-input" name="message" rows="1" maxlength="600" placeholder="Ask about Sai Kiran's projects..." required></textarea>
+							<button type="submit" id="ai-chat-send" class="ai-chat-send" aria-label="Send message">
+								<span class="icon solid fa-paper-plane" aria-hidden="true"></span>
+							</button>
+						</div>
+					</form>
+				</section>
+				<button type="button" id="ai-chat-launcher" class="ai-chat-launcher" aria-controls="ai-chat-panel" aria-expanded="false">
+					<span class="ai-chat-launcher-icon icon solid fa-comment" aria-hidden="true"></span>
+					<span id="ai-chat-launcher-text" class="ai-chat-launcher-text">Ask AI</span>
+					<span class="ai-chat-launcher-pulse" aria-hidden="true"></span>
+				</button>
 			</div>
 
 		<script src="assets/js/jquery.min.js"></script>
