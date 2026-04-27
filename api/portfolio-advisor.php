@@ -27,7 +27,7 @@ if ($question === '') {
 	exit;
 }
 
-if (mb_strlen($question) > 600) {
+if (strlen($question) > 600) {
 	http_response_code(422);
 	echo json_encode(['error' => 'Please keep the question under 600 characters.']);
 	exit;
