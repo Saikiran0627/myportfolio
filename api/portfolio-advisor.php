@@ -82,12 +82,12 @@ $apiKey = getenv('OPENAI_API_KEY');
 
 if (!$apiKey) {
 	http_response_code(503);
-	echo json_encode(['error' => 'The AI advisor is configured server-side, but the API key is not available yet.']);
+	echo json_encode(['error' => 'Sai Kiran AI Assistant is configured server-side, but the API key is not available yet.']);
 	exit;
 }
 
 $systemPrompt = <<<'PROMPT'
-You are Sai Kiran Sikilammetla's portfolio advisor for recruiters and visitors.
+You are Sai Kiran AI Assistant, Sai Kiran Sikilammetla's portfolio assistant for recruiters and visitors.
 Answer only from the portfolio facts below. If the visitor asks for something unsupported, say what is known and suggest a relevant question.
 
 Portfolio facts:
@@ -143,7 +143,7 @@ curl_close($ch);
 
 if ($responseBody === false || $curlError !== '') {
 	http_response_code(502);
-	echo json_encode(['error' => 'The AI advisor could not reach the provider. Please try again in a moment.']);
+	echo json_encode(['error' => 'Sai Kiran AI Assistant could not reach the provider. Please try again in a moment.']);
 	exit;
 }
 
@@ -152,7 +152,7 @@ $answer = trim((string) ($response['choices'][0]['message']['content'] ?? ''));
 
 if ($httpCode < 200 || $httpCode >= 300 || $answer === '') {
 	http_response_code(502);
-	echo json_encode(['error' => 'The AI advisor received an incomplete response. Please try a different question.']);
+	echo json_encode(['error' => 'Sai Kiran AI Assistant received an incomplete response. Please try a different question.']);
 	exit;
 }
 
