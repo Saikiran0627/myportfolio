@@ -3,8 +3,8 @@
 
 	var STORAGE_KEY = 'saiPortfolioAdvisorMessages';
 	var SYSTEM_PROMPT = [
-		'You are Sai Kiran Sikilammetla\'s portfolio assistant for recruiters and visitors.',
-		'Answer only from the portfolio facts provided by the server. Keep replies concise, specific, and recruiter-friendly.'
+		'You are Sai Kiran AI Assistant.',
+		'Answer questions about Sai Kiran\'s portfolio clearly and professionally.'
 	].join(' ');
 	var WIDGET_STATE_KEY = 'saiPortfolioAdvisorWidgetOpen';
 	var WELCOME_MESSAGE = 'Hi! I’m Sai Kiran AI Assistant. I can help you explore Sai Kiran’s portfolio—feel free to ask about skills, projects, education, certifications, or role fit.';
@@ -232,53 +232,7 @@
 		});
 	}
 
-	function sendConversation() {
-		return fetch('/api/portfolio-advisor', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				'Accept': 'application/json'
-			},
-			body: JSON.stringify({ messages: getConversationForApi() })
-		})
-			.then(function(result) {
-				return result.json().catch(function() {
-					throw new Error('The server returned an unreadable response.');
-				}).then(function(payload) {
-					if (!result.ok || !payload.ok)
-						throw new Error(payload.error || 'Sai Kiran AI Assistant is temporarily unavailable.');
-
-					return payload.answer;
-				});
-			});
-	}
-
-	function typeAssistantReply(reply) {
-		return new Promise(function(resolve) {
-			var message = addMessage('assistant', '');
-			var bubble = chatWindow.lastElementChild.querySelector('.ai-chat-text');
-			var index = 0;
-
-			function typeNextCharacter() {
-				if (index >= reply.length) {
-					message.content = reply;
-					saveMessages();
-					resolve();
-					return;
-				}
-
-				message.content += reply.charAt(index);
-				bubble.textContent = message.content;
-				index += 1;
-				scrollToLatest();
-				window.setTimeout(typeNextCharacter, 12);
-			}
-
-			typeNextCharacter();
-		});
-	}
-
-	function handleSubmit(event) {
+	async function handleSubmit(event) {
 		event.preventDefault();
 
 		if (isWaiting)
@@ -299,23 +253,35 @@
 		setStatus('Sai Kiran AI Assistant is typing...');
 		showTypingIndicator();
 
-		sendConversation()
-			.then(function(answer) {
-				hideTypingIndicator();
-				return typeAssistantReply(answer);
-			})
-			.then(function() {
-				setStatus('Answer generated from the server-side AI endpoint.');
-			})
-			.catch(function(error) {
-				hideTypingIndicator();
-				addMessage('assistant', error.message || 'Sai Kiran AI Assistant is temporarily unavailable. Please try again shortly.');
-				setStatus('Unable to complete the AI request.');
-			})
-			.finally(function() {
-				setLoading(false);
-				input.focus();
+		try {
+			const response = await fetch('/api/portfolio-advisor', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json'
+				},
+				body: JSON.stringify({ messages: getConversationForApi() })
 			});
+
+			const data = await response.json();
+			const reply = data.answer || data.error || 'Something went wrong.';
+
+			hideTypingIndicator();
+			addMessage('assistant', reply);
+
+			if (response.ok && data.ok) {
+				setStatus('Answer generated from the server-side AI endpoint.');
+			} else {
+				setStatus('Unable to complete the AI request.');
+			}
+		} catch (error) {
+			hideTypingIndicator();
+			addMessage('assistant', 'Something went wrong.');
+			setStatus('Unable to complete the AI request.');
+		} finally {
+			setLoading(false);
+			input.focus();
+		}
 	}
 
 	function clearChat() {
