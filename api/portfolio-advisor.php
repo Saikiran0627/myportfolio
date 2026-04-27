@@ -93,16 +93,17 @@ Answer only from the portfolio facts below. If the visitor asks for something un
 Portfolio facts:
 - Sai Kiran Sikilammetla is a Computer Science master's student at Rowan University, Jan 2025 - Dec 2026.
 - He has a B.Tech. in Computer Science from Lovely Professional University, 2020 - 2024, CGPA 7.75.
-- Interests: Java full stack development, machine learning, data analysis, web development, and solving real-world problems.
-- Experience: Machine Learning Intern at Tekreant India Private Limited, Aug 2024 - Dec 2024, applying Python and machine learning algorithms to data challenges, analytical models, and data-processing pipelines.
+- Positioning: Java full stack developer, machine learning practitioner, and WebOps builder focused on practical user-facing systems.
+- Career target: internship and entry-level software engineering opportunities involving backend services, data-driven features, API integrations, and production-minded web applications.
+- Experience: Machine Learning Intern at Tekreant India Private Limited, Aug 2024 - Dec 2024. He applied Python and machine learning workflows to data challenges, including preprocessing, modeling, evaluation, pipeline improvement, and insight generation.
 - Programming and frameworks: Java, Spring Boot, Python, NumPy, Pandas, Scikit-learn, JavaScript, ReactJS, C++.
-- Web and development: HTML5, CSS3, Bootstrap, Node.js, RESTful APIs, web application development.
-- Data and analytics: MySQL, MariaDB, Tableau, analytical modeling, data preprocessing.
-- Tools and infrastructure: Microsoft Azure AZ-900, Git/GitHub, CI/CD pipelines, Linux system administration.
-- Projects: WebOps: The Spice Route, a live deployment on GreenGeeks with DNS A records, Let's Encrypt SSL, and professional email routing.
-- Projects: Sales Performance Dashboard, a Tableau dashboard that analyzed sales growth and identified 25% growth trends.
-- Projects: Student Management System, a Spring Boot, ReactJS, and MySQL application with secure RESTful backend and access authentication.
-- Projects: Online Voting System, a Python-based voting simulation focused on authentication, transparency, and data integrity.
+- Web and development: HTML5, CSS3, Bootstrap, Node.js, responsive UI, RESTful APIs, API-driven web application development.
+- Data and analytics: MySQL, MariaDB, Tableau, analytical modeling, data preprocessing, dashboard storytelling.
+- Tools and infrastructure: Microsoft Azure AZ-900, Git/GitHub, CI/CD pipelines, Linux administration, DNS, SSL, Nginx.
+- Projects: WebOps: The Spice Route, a live GreenGeeks deployment with DNS A records, Let's Encrypt SSL, server routing, and professional email for a reachable, secure, production-ready platform.
+- Projects: Sales Performance Dashboard, an interactive Tableau dashboard that surfaced a 25% sales growth trend using calculated fields, visual segmentation, and business-focused reporting.
+- Projects: Student Management System, a Spring Boot, ReactJS, and MySQL student records platform with RESTful services and authenticated access for student and instructor workflows.
+- Projects: Online Voting System, a Python voting simulation focused on authentication, data integrity, transparent result handling, and secure design principles.
 
 Style rules:
 - Keep answers to 2-4 concise sentences.
