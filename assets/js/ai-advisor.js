@@ -260,7 +260,17 @@
 				body: JSON.stringify({ messages })
 			});
 
-			const data = await response.json();
+			const rawResponse = await response.text();
+			let data = {};
+
+			try {
+				data = rawResponse ? JSON.parse(rawResponse) : {};
+			} catch (parseError) {
+				data = { error: 'Sai Kiran AI Assistant received an invalid server response. Please check the API endpoint configuration.' };
+			}
+
+			console.log('API RESPONSE:', data);
+
 			const reply = data.answer || data.error || 'Something went wrong.';
 
 			hideTypingIndicator();
@@ -273,6 +283,7 @@
 			}
 		} catch (error) {
 			hideTypingIndicator();
+			addMessage('assistant', 'Sai Kiran AI Assistant could not reach the server. Please check the API endpoint and try again.');
 			setStatus('Unable to complete the AI request.');
 		} finally {
 			setLoading(false);
