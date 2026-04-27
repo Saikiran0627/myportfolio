@@ -1,6 +1,6 @@
 # Sai Kiran Sikilammetla Portfolio
 
-Production portfolio site for the CS Web Server Platforms final practical. The site is a static HTML/CSS/JavaScript portfolio with a server-side PHP AI endpoint that powers the "AI Portfolio Advisor" section.
+Production portfolio site for the CS Web Server Platforms final practical. The site is a static HTML/CSS/JavaScript portfolio with a server-side PHP AI endpoint that powers the "Sai Kiran AI Assistant" section.
 
 ## Tech Stack Manifest
 
@@ -13,7 +13,7 @@ Production portfolio site for the CS Web Server Platforms final practical. The s
 
 ## AI Feature
 
-The AI Portfolio Advisor is a floating chat widget that opens from the bottom-right corner of the portfolio, similar to Intercom or Drift. Visitors can ask follow-up questions about Sai Kiran's skills, projects, education, certifications, and role fit. Browser JavaScript keeps the chat history in memory and `localStorage`, then sends the conversation to a same-origin endpoint:
+Sai Kiran AI Assistant is a floating chat widget that opens from the bottom-right corner of the portfolio, similar to Intercom or Drift. Visitors can ask follow-up questions about Sai Kiran's skills, projects, education, certifications, and role fit. Browser JavaScript keeps the chat history in memory and `localStorage`, then sends the conversation to a same-origin endpoint:
 
 ```text
 POST /api/portfolio-advisor
@@ -90,5 +90,5 @@ Also configure UFW or an equivalent firewall so only ports 22, 80, and 443 are o
 - Let's Encrypt SSL/TLS certificate and HTTP-to-HTTPS 301 redirect
 - Nginx server block and API route configured
 - `OPENAI_API_KEY` stored server-side
-- Screenshot of the AI Portfolio Advisor working on the live URL
+- Screenshot of Sai Kiran AI Assistant working on the live URL
 - LinkedIn project/post linking to the live URL and tagging: `#Linux #Nginx #SSL #WebOps #AI #APIIntegration #PromptEngineering`

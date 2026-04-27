@@ -7,7 +7,7 @@
 		'Answer only from the portfolio facts provided by the server. Keep replies concise, specific, and recruiter-friendly.'
 	].join(' ');
 	var WIDGET_STATE_KEY = 'saiPortfolioAdvisorWidgetOpen';
-	var WELCOME_MESSAGE = 'Hi! I am Sai Kiran\'s AI Portfolio Advisor. Ask me about his skills, projects, education, or fit for a technical role.';
+	var WELCOME_MESSAGE = 'Hi! I’m Sai Kiran AI Assistant. I can help you explore Sai Kiran’s portfolio—feel free to ask about skills, projects, education, certifications, or role fit.';
 
 	var widget = document.getElementById('ai-chat-widget');
 	var launcher = document.getElementById('ai-chat-launcher');
@@ -63,7 +63,20 @@
 			cleanMessages.unshift({ role: 'system', content: SYSTEM_PROMPT });
 
 		cleanMessages[0].content = SYSTEM_PROMPT;
+		normalizeWelcomeMessage(cleanMessages);
 		return cleanMessages;
+	}
+
+	function normalizeWelcomeMessage(cleanMessages) {
+		for (var i = 1; i < cleanMessages.length; i += 1) {
+			if (cleanMessages[i].role === 'user')
+				return;
+
+			if (cleanMessages[i].role === 'assistant') {
+				cleanMessages[i].content = WELCOME_MESSAGE;
+				return;
+			}
+		}
 	}
 
 	function saveMessages() {
@@ -148,7 +161,7 @@
 		text.className = 'ai-chat-text';
 		time.className = 'ai-chat-time';
 
-		label.textContent = message.role === 'user' ? 'You' : 'AI Advisor';
+		label.textContent = message.role === 'user' ? 'You' : 'Sai Kiran AI Assistant';
 		text.textContent = message.content;
 		time.textContent = formatTime(message.timestamp);
 
@@ -193,7 +206,7 @@
 		bubble.className = 'ai-chat-bubble ai-chat-bubble--typing';
 		label.className = 'ai-chat-label';
 		dots.className = 'ai-chat-typing-dots';
-		label.textContent = 'AI Advisor';
+		label.textContent = 'Sai Kiran AI Assistant';
 		dots.innerHTML = '<span></span><span></span><span></span>';
 
 		bubble.appendChild(label);
@@ -233,7 +246,7 @@
 					throw new Error('The server returned an unreadable response.');
 				}).then(function(payload) {
 					if (!result.ok || !payload.ok)
-						throw new Error(payload.error || 'The AI advisor is temporarily unavailable.');
+						throw new Error(payload.error || 'Sai Kiran AI Assistant is temporarily unavailable.');
 
 					return payload.answer;
 				});
@@ -283,7 +296,7 @@
 		input.value = '';
 		input.style.height = '';
 		setLoading(true);
-		setStatus('AI Advisor is typing...');
+		setStatus('Sai Kiran AI Assistant is typing...');
 		showTypingIndicator();
 
 		sendConversation()
@@ -296,7 +309,7 @@
 			})
 			.catch(function(error) {
 				hideTypingIndicator();
-				addMessage('assistant', error.message || 'The AI advisor is temporarily unavailable. Please try again shortly.');
+				addMessage('assistant', error.message || 'Sai Kiran AI Assistant is temporarily unavailable. Please try again shortly.');
 				setStatus('Unable to complete the AI request.');
 			})
 			.finally(function() {
