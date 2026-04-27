@@ -26,9 +26,9 @@ if (!is_array($incomingMessages)) {
 	exit;
 }
 
-if (count($incomingMessages) < 2) {
+if (count($incomingMessages) < 1) {
 	http_response_code(422);
-	echo json_encode(['error' => 'Please include at least one message for the assistant.']);
+	echo json_encode(['error' => 'Please include at least one message.']);
 	exit;
 }
 
