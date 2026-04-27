@@ -254,34 +254,19 @@
 		showTypingIndicator();
 
 		try {
-			const res = await fetch('/api/portfolio-advisor', {
+			const response = await fetch('/api/portfolio-advisor', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ messages })
 			});
 
-			const data = await res.json();
-
-			// DEBUG (keep this)
-			console.log('API RESPONSE:', data);
-
-			// FIX
-			let reply = '';
-
-			if (typeof data === 'string') {
-				reply = data;
-			} else if (data.answer) {
-				reply = data.answer;
-			} else if (data.error) {
-				reply = data.error;
-			} else {
-				reply = 'Unable to complete the AI request.';
-			}
+			const data = await response.json();
+			const reply = data.answer || data.error || 'Something went wrong.';
 
 			hideTypingIndicator();
 			addMessage('assistant', reply);
 
-			if (res.ok && data.ok) {
+			if (response.ok && data.ok) {
 				setStatus('Answer generated from the server-side AI endpoint.');
 			} else {
 				setStatus('Unable to complete the AI request.');
