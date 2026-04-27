@@ -5,6 +5,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/ai-advisor.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
@@ -23,6 +24,7 @@
 							<h2>Navigation</h2>
 							<ul class="links">
 								<li><a href="index.html">Home</a></li>
+								<li><a href="#ai-advisor">AI Portfolio Advisor</a></li>
 								<li><a href="https://www.linkedin.com/in/saikiranssk">LinkedIn Profile</a></li>
 								<li><a href="https://github.com/saikiran0627">GitHub Portfolio</a></li>
 							</ul>
@@ -136,6 +138,30 @@
 								</div>
 							</section>
 
+						<section id="ai-advisor" class="wrapper alt spotlight style3">
+								<div class="inner">
+									<div class="content">
+										<h2 class="major">AI Portfolio Advisor</h2>
+										<p>Ask a focused question about my skills, projects, or fit for a technical role. This feature calls OpenAI from a server-side PHP endpoint, so the API key never appears in the browser.</p>
+										<form id="ai-advisor-form" class="ai-advisor-form">
+											<div class="fields">
+												<div class="field">
+													<label for="advisor-question">Question for the assistant</label>
+													<textarea id="advisor-question" name="question" rows="4" maxlength="600" placeholder="Example: Which of Sai Kiran's projects best demonstrates web operations and AI readiness?" required></textarea>
+												</div>
+											</div>
+											<ul class="actions">
+												<li><button type="submit" class="primary">Ask AI Advisor</button></li>
+											</ul>
+										</form>
+										<div id="ai-advisor-status" class="ai-advisor-status" role="status" aria-live="polite"></div>
+										<div id="ai-advisor-response" class="ai-advisor-response" aria-live="polite">
+											<p>Responses will appear here with short, recruiter-friendly guidance grounded in the portfolio content on this page.</p>
+										</div>
+									</div>
+								</div>
+							</section>
+
 					</section>
 
 				<section id="footer">
@@ -161,6 +187,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script src="assets/js/ai-advisor.js"></script>
 			
 			<script src="https://unpkg.com/scrollreveal"></script>
 			<script>

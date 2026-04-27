@@ -1,0 +1,40 @@
+/* AI Portfolio Advisor */
+
+.ai-advisor-form {
+	margin-bottom: 1em;
+	text-align: left;
+	width: 100%;
+}
+
+.ai-advisor-status {
+	color: rgba(255, 255, 255, 0.85);
+	font-family: Raleway, Helvetica, sans-serif;
+	font-size: 0.75em;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	margin: 0 0 1em 0;
+	min-height: 1.5em;
+	text-transform: uppercase;
+}
+
+.ai-advisor-response {
+	background: rgba(255, 255, 255, 0.04);
+	border: solid 2px rgba(255, 255, 255, 0.125);
+	border-radius: 5px;
+	margin: 0 0 2em 0;
+	padding: 1.25em 1.5em;
+	text-align: left;
+	white-space: pre-wrap;
+}
+
+.ai-advisor-response p {
+	margin: 0;
+}
+
+.ai-advisor-response.is-error {
+	border-color: #f2849e;
+}
+
+.ai-advisor-response.is-success {
+	border-color: #7ecaf6;
+}
