@@ -254,29 +254,40 @@
 		showTypingIndicator();
 
 		try {
-			const response = await fetch('/api/portfolio-advisor', {
+			const res = await fetch('/api/portfolio-advisor', {
 				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Accept': 'application/json'
-				},
-				body: JSON.stringify({ messages: getConversationForApi() })
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ messages })
 			});
 
-			const data = await response.json();
-			const reply = data.answer || data.error || 'Unable to complete the AI request.';
+			const data = await res.json();
+
+			// DEBUG (keep this)
+			console.log('API RESPONSE:', data);
+
+			// FIX
+			let reply = '';
+
+			if (typeof data === 'string') {
+				reply = data;
+			} else if (data.answer) {
+				reply = data.answer;
+			} else if (data.error) {
+				reply = data.error;
+			} else {
+				reply = 'Unable to complete the AI request.';
+			}
 
 			hideTypingIndicator();
 			addMessage('assistant', reply);
 
-			if (response.ok && data.ok) {
+			if (res.ok && data.ok) {
 				setStatus('Answer generated from the server-side AI endpoint.');
 			} else {
 				setStatus('Unable to complete the AI request.');
 			}
 		} catch (error) {
 			hideTypingIndicator();
-			addMessage('assistant', 'Unable to complete the AI request.');
 			setStatus('Unable to complete the AI request.');
 		} finally {
 			setLoading(false);
