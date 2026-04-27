@@ -264,7 +264,7 @@
 			});
 
 			const data = await response.json();
-			const reply = data.answer || data.error || 'Something went wrong.';
+			const reply = data.answer || data.error || 'Unable to complete the AI request.';
 
 			hideTypingIndicator();
 			addMessage('assistant', reply);
@@ -276,7 +276,7 @@
 			}
 		} catch (error) {
 			hideTypingIndicator();
-			addMessage('assistant', 'Something went wrong.');
+			addMessage('assistant', 'Unable to complete the AI request.');
 			setStatus('Unable to complete the AI request.');
 		} finally {
 			setLoading(false);
