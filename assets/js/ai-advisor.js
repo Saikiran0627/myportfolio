@@ -108,7 +108,7 @@
 		launcher.classList.toggle('is-open', open);
 		launcher.setAttribute('aria-expanded', open ? 'true' : 'false');
 		panel.setAttribute('aria-hidden', open ? 'false' : 'true');
-		launcherText.textContent = open ? 'Close' : 'Ask AI';
+		launcherText.textContent = open ? 'Close' : 'Sai Kiran AI Assistant';
 
 		try {
 			localStorage.setItem(WIDGET_STATE_KEY, open ? 'open' : 'closed');
