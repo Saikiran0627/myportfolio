@@ -1,6 +1,6 @@
 # Sai Kiran Sikilammetla Portfolio
 
-Production portfolio site for the CS Web Server Platforms final practical. The site is a static HTML/CSS/JavaScript portfolio with a server-side PHP AI endpoint that powers the "Sai Kiran AI Assistant" section.
+Production portfolio site for the CS Web Server Platforms final practical. The site is a static HTML/CSS/JavaScript portfolio with a server-side PHP AI endpoint that powers the "Sai Kiran AI Assistant" chatbot.
 
 ## Tech Stack Manifest
 
@@ -13,7 +13,7 @@ Production portfolio site for the CS Web Server Platforms final practical. The s
 
 ## AI Feature
 
-Sai Kiran AI Assistant is a floating chat widget that opens from the bottom-right corner of the portfolio, similar to Intercom or Drift. Visitors can ask follow-up questions about Sai Kiran's skills, projects, education, certifications, and role fit. Browser JavaScript keeps the chat history in memory and `localStorage`, then sends the conversation to a same-origin endpoint:
+Sai Kiran AI Assistant is a contextual OpenAI GPT-4o mini chatbot for this portfolio. Visitors can open it from the dedicated AI Assistant section or from the bottom-right launcher and ask follow-up questions about Sai Kiran's skills, projects, education, certifications, and role fit. Browser JavaScript keeps the chat history in memory and `localStorage`, then sends the conversation to a same-origin endpoint:
 
 ```text
 POST /api/portfolio-advisor
