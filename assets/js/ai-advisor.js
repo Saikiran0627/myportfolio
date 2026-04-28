@@ -254,10 +254,10 @@
 		showTypingIndicator();
 
 		try {
-			const response = await fetch('/api/portfolio-advisor.php', {
+			const response = await fetch('/api/portfolio-advisor', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ messages })
+				body: JSON.stringify({ messages: getConversationForApi() })
 			});
 
 			const rawResponse = await response.text();
@@ -270,8 +270,6 @@
 					error: 'Sai Kiran AI Assistant received an invalid server response. Please check the API endpoint configuration.'
 				};
 			}
-
-			console.log('API RESPONSE:', data);
 
 			const reply = getAssistantReply(data, response.status);
 
